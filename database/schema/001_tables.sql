@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE Category(
     category_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(100) NOT NULL UNIQUE CHECK(length(name) > 0),
+    name VARCHAR(100) NOT NULL UNIQUE,
     color VARCHAR(20),
     icon VARCHAR(50),
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -16,7 +16,9 @@ CREATE TABLE BudgetPeriod(
     end_date DATE NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT unique_budget_period UNIQUE(month,year),
-    CONSTRAINT valid_period CHECK(start_date <= end_date)
+    CONSTRAINT valid_period CHECK(start_date <= end_date),
+    CHECK(end_date = (date_trunc('month', start_date)
+                  + interval '1 month - 1 day')::date)
 );
 
 CREATE TABLE Budget(
@@ -39,7 +41,7 @@ CREATE TABLE Budget(
 
     CONSTRAINT unique_category_budget
         UNIQUE(category_id,period_id)
-)
+);
 
 CREATE TABLE Expense(
     expense_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -82,3 +84,20 @@ CREATE TABLE AuditLog(
     new_data JSONB,
     performed_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE ImportHistory(
+    import_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    file_name TEXT NOT NULL,
+    imported_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    total_records INT NOT NULL CHECK(total_records >= 0),
+    successful_records INT NOT NULL DEFAULT 0,
+    failed_records INT NOT NULL DEFAULT 0,
+    CHECK(successful_records + failed_records <= total_records)
+);
+
+-- CREATE TABLE AppUser(
+--     appuser_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     username VARCHAR(50) NOT NULL UNIQUE,
+--     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- )

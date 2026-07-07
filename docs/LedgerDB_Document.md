@@ -544,3 +544,47 @@ This project demonstrates practical usage of
 ---
 
 I think this project is actually **stronger than a typical student CRUD project** because it gives you an opportunity to discuss advanced DBMS concepts in depth—triggers, stored procedures, functions, transactions, views, indexing, normalization, and security—topics that interviewers commonly ask about. It also aligns well with the engineering-focused style of your FlashLock documentation. 
+
+
+
+```
+database/
+│
+├── schema/
+│   ├── 001_tables.sql
+│   └── 002_indexes.sql
+│
+├── functions/
+│   ├── get_remaining_budget.sql
+│   ├── get_monthly_expense.sql
+│   ├── get_average_daily_spend.sql
+│   ├── get_total_expense.sql
+│   └── is_budget_exceeded.sql
+│
+├── procedures/
+│   ├── add_expense.sql
+│   ├── update_expense.sql
+│   ├── delete_expense.sql
+│   ├── create_budget.sql
+│   └── mark_alert_read.sql
+│
+├── triggers/
+│   ├── expense_insert.sql
+│   ├── expense_update.sql
+│   ├── expense_delete.sql
+│   ├── audit_trigger.sql
+│   └── budget_alert_trigger.sql
+│
+├── views/
+│   ├── monthly_dashboard.sql
+│   ├── monthly_summary.sql
+│   ├── remaining_budget.sql
+│   └── budget_status.sql
+│
+├── seed/
+│   ├── default_categories.sql
+│   └── sample_data.sql
+│
+└── initialize.py
+
+```
