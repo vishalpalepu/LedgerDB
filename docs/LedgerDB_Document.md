@@ -586,5 +586,16 @@ database/
 │   └── sample_data.sql
 │
 └── initialize.py
+```
+
+```
+
+| File                          | Returns                                | Used by            |
+| ----------------------------- | -------------------------------------- | ------------------ |
+| `get_total_expense.sql`       | Total expense of a category in a month | Reports, Dashboard |
+| `get_remaining_budget.sql`    | Budget − Expense                       | Dashboard, Alerts  |
+| `get_monthly_expense.sql`     | Total expense for an entire month      | Monthly Summary    |
+| `get_average_daily_spend.sql` | Average spending per day               | Analytics          |
+| `is_budget_exceeded.sql`      | TRUE/FALSE                             | Trigger, Frontend  |
 
 ```
