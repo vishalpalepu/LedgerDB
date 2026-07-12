@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION get_days_remaining_in_period(
     p_period_id UUID
 )
+RETURNS INT
 LANGUAGE plpgsql
 AS 
 $$
