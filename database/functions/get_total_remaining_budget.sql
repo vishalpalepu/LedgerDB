@@ -11,7 +11,7 @@ DECLARE
 BEGIN
     FOR v_row IN SELECT category_id FROM Category 
     LOOP
-        v_remaining_total := v_remaining_total + get_remaining_budget(v_row.category_id,p_period_id);
+        v_remaining_total := v_remaining_total + get_remaining_category_budget(v_row.category_id,p_period_id);
     END LOOP
 
     RETURN v_remaining_total

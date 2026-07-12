@@ -558,7 +558,7 @@ database/
 │   ├── get_remaining_budget.sql
 │   ├── get_monthly_expense.sql
 │   ├── get_average_daily_spend.sql
-│   ├── get_total_expense.sql
+│   ├── get_total_category_expense.sql
 │   └── is_budget_exceeded.sql
 │
 ├── procedures/
@@ -590,12 +590,18 @@ database/
 
 ```
 
-| File                          | Returns                                | Used by            |
-| ----------------------------- | -------------------------------------- | ------------------ |
-| `get_total_expense.sql`       | Total expense of a category in a month | Reports, Dashboard |
-| `get_remaining_budget.sql`    | Budget − Expense                       | Dashboard, Alerts  |
-| `get_monthly_expense.sql`     | Total expense for an entire month      | Monthly Summary    |
-| `get_average_daily_spend.sql` | Average spending per day               | Analytics          |
-| `is_budget_exceeded.sql`      | TRUE/FALSE                             | Trigger, Frontend  |
+| Function                                       | Problem Statement                                                                                                      | Input                      | Output                                                                                                    |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `get_total_category_expense()`                          | Calculate the total amount spent for a specific category within a given budget period.                                 | `category_id`, `period_id` | `NUMERIC` – Total expense for the category during the period.                                             |
+| `get_monthly_expense()`                        | Calculate the total expenses incurred across all categories for a specified budget period.                             | `period_id`                | `NUMERIC` – Total monthly expenditure.                                                                    |
+| `get_remaining_budget()`                       | Determine the remaining budget available for a category after subtracting recorded expenses from the allocated budget. | `category_id`, `period_id` | `NUMERIC` – Remaining budget (can be negative if overspent).                                              |
+| `is_budget_exceeded()`                         | Determine whether the spending for a category has exceeded its allocated budget during a budget period.                | `category_id`, `period_id` | `BOOLEAN` – `TRUE` if budget is exceeded, otherwise `FALSE`.                                              |
+| `get_average_daily_spend()`                    | Compute the average amount spent per day during a budget period.                                                       | `period_id`                | `NUMERIC` – Average daily expenditure.                                                                    |
+| `get_category_percentage()`                    | Calculate the percentage contribution of a category's expenses to the total monthly expenses.                          | `category_id`, `period_id` | `NUMERIC` – Percentage of total expenditure attributed to the category.                                   |
+| `get_highest_spending_category()`              | Identify the category with the highest total expenditure within a specified budget period.                             | `period_id`                | `Category Name` (or `UUID`, depending on your implementation) representing the highest-spending category. |
+| `get_budget_utilization()`                     | Calculate the percentage of an allocated budget that has been utilized by recorded expenses.                           | `category_id`, `period_id` | `NUMERIC` – Budget utilization percentage (`0–100+`).                                                     |
+| `get_days_remaining_in_period()` *(Optional)*  | Determine the number of days remaining until the end of a budget period.                                               | `period_id`                | `INTEGER` – Number of days remaining.                                                                     |
+| `get_projected_month_end_spend()` *(Optional)* | Estimate the total expenditure by the end of the budget period based on the current average daily spending rate.       | `period_id`                | `NUMERIC` – Projected month-end expenditure.                                                              |
+
 
 ```

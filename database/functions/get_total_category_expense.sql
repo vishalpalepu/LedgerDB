@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_total_expense(
+CREATE OR REPLACE FUNCTION get_total_category_expense(
     p_category_id UUID,
     p_period_id UUID
 )
@@ -24,7 +24,7 @@ $$;
 
 
 -- how to use this FUNCTION
--- SELECT get_total_expense(
+-- SELECT get_total_category_expense(
 --     'category_uuid',
 --     'period_uuid'
 -- );
