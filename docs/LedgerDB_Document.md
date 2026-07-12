@@ -555,35 +555,79 @@ database/
 │   └── 002_indexes.sql
 │
 ├── functions/
-│   ├── get_remaining_budget.sql
-│   ├── get_monthly_expense.sql
-│   ├── get_average_daily_spend.sql
-│   ├── get_total_category_expense.sql
-│   └── is_budget_exceeded.sql
+│   │
+│   ├── expense/
+│   │   ├── get_monthly_expense.sql
+│   │   ├── get_total_category_expense.sql
+│   │   ├── get_average_daily_spend.sql
+│   │   ├── get_projected_month_end_spend.sql
+│   │   └── get_days_remaining_in_period.sql
+│   │
+│   ├── budget/
+│   │   ├── get_remaining_category_budget.sql
+│   │   ├── get_total_remaining_budget.sql
+│   │   ├── get_budget_utilization.sql
+│   │   └── is_budget_exceeded.sql
+│   │
+│   └── analytics/
+│       ├── get_category_percentage.sql
+│       ├── get_highest_spending_category.sql
+│       ├── get_monthly_spending_trend.sql
+│       ├── get_month_over_month_change.sql
+│       ├── get_category_spending_trend.sql
+│       ├── get_highest_spending_month.sql
+│       ├── get_lowest_spending_month.sql
+│       ├── get_average_monthly_spending.sql
+│       ├── get_budget_variance.sql
+│       └── get_consecutive_overspending_streak.sql
 │
 ├── procedures/
-│   ├── add_expense.sql
-│   ├── update_expense.sql
-│   ├── delete_expense.sql
-│   ├── create_budget.sql
-│   └── mark_alert_read.sql
+│   ├── expense/
+│   │   ├── record_expense.sql
+│   │   ├── update_expense.sql
+│   │   └── delete_expense.sql
+│   │
+│   ├── budget/
+│   │   ├── create_budget_period.sql
+│   │   ├── set_budget.sql
+│   │   ├── update_budget.sql
+│   │   └── generate_budget_alerts.sql
+│   │
+│   ├── category/
+│   │   └── update_category.sql
+│   │
+│   ├── alerts/
+│   │   └── mark_alert_as_read.sql
+│   │
+│   └── import/
+│       └── complete_import_history.sql
 │
 ├── triggers/
 │   ├── expense_insert.sql
 │   ├── expense_update.sql
 │   ├── expense_delete.sql
 │   ├── audit_trigger.sql
-│   └── budget_alert_trigger.sql
+│   ├── budget_alert_trigger.sql
+│   └── update_timestamp.sql
 │
 ├── views/
 │   ├── monthly_dashboard.sql
 │   ├── monthly_summary.sql
 │   ├── remaining_budget.sql
-│   └── budget_status.sql
+│   ├── budget_status.sql
+│   ├── spending_trend.sql
+│   ├── category_summary.sql
+│   ├── budget_vs_actual.sql
+│   └── alert_summary.sql
 │
 ├── seed/
 │   ├── default_categories.sql
 │   └── sample_data.sql
+│
+├── tests/
+│   ├── function_tests.sql
+│   ├── procedure_tests.sql
+│   └── trigger_tests.sql
 │
 └── initialize.py
 ```
