@@ -603,9 +603,6 @@ database/
 │       └── complete_import_history.sql
 │
 ├── triggers/
-│   ├── expense_insert.sql
-│   ├── expense_update.sql
-│   ├── expense_delete.sql
 │   ├── audit_trigger.sql
 │   ├── budget_alert_trigger.sql
 │   └── update_timestamp.sql
