@@ -12,6 +12,25 @@ BEGIN
         RAISE EXCEPTION 'Budget must be greater than zero.';
     END IF;
 
+
+    IF NOT EXISTS (
+        Select 1
+        FROM Category
+        WHERE category_id = p_category_id
+    )
+    THEN
+        RAISE EXCEPTION 'Category not found.';
+    END IF;
+
+    IF NOT EXISTS (
+        Select 1
+        FROM BudgetPeriod
+        WHERE period_id = p_period_id
+    )
+    THEN
+        RAISE EXCEPTION 'Period not found.';
+    END IF;
+
     INSERT INTO Budget
     (
         category_id,
