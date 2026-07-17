@@ -14,9 +14,9 @@ SELECT
 
     (
         get_monthly_expense(bp.period_id) / NULLIF(
-            SELECT COALESCE(SUM(b.amount),0)
+            (SELECT COALESCE(SUM(b.budget_amount),0)
             FROM Budget b
-            WHERE b.period_id = bp.period_id
+            WHERE b.period_id = bp.period_id)
         ,0)
     )*100 AS budget_utilization
 FROM BudgetPeriod bp

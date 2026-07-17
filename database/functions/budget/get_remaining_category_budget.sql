@@ -18,7 +18,7 @@ BEGIN
     WHERE b.category_id = p_category_id AND 
         b.period_id = p_period_id;
 
-    RETURN v_remaining_budget - v_spent;
+    RETURN (v_remaining_budget - v_spent);
 END;
 $$;
 

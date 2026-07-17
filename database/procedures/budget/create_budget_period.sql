@@ -1,5 +1,5 @@
 CREATE OR REPLACE PROCEDURE create_budget_period(
-    IN p_month SMALLINT,
+    IN p_month INTEGER,
     IN p_year INTEGER
 )
 LANGUAGE plpgsql

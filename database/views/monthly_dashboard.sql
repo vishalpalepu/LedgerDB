@@ -7,7 +7,7 @@ SELECT
 
     ms.total_budget,
 
-    ms.total_expenses,
+    ms.total_expense,
 
     ms.remaining_budget,
 
@@ -23,8 +23,8 @@ SELECT
     (
         SELECT COUNT(*)
         FROM Alert a
-        JOIN BudgetPeriod bp
-        ON a.period_id = bp.period_id
+        JOIN Budget b ON a.budget_id = b.budget_id
+        JOIN BudgetPeriod bp ON b.period_id = bp.period_id  
         WHERE bp.month = ms.month
         AND bp.year = ms.year
     ) AS total_alerts

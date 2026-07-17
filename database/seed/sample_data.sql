@@ -74,170 +74,64 @@ END;
 $$;
 
 -- ==========================================
--- January Expenses
+-- Expenses
 -- ==========================================
 
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    450,
-    '2026-01-03',
-    'Grocery shopping'
-);
+DO
+$$
+DECLARE
+    v_food UUID;
+    v_transport UUID;
+    v_rent UUID;
+    v_entertainment UUID;
+    v_utilities UUID;
+    v_shopping UUID;
+    v_healthcare UUID;
+    v_subscriptions UUID;
+    v_education UUID;
+    v_travel UUID;
+BEGIN
+    SELECT category_id INTO v_food FROM Category WHERE name='Food';
+    SELECT category_id INTO v_transport FROM Category WHERE name='Transport';
+    SELECT category_id INTO v_rent FROM Category WHERE name='Rent';
+    SELECT category_id INTO v_entertainment FROM Category WHERE name='Entertainment';
+    SELECT category_id INTO v_utilities FROM Category WHERE name='Utilities';
+    SELECT category_id INTO v_shopping FROM Category WHERE name='Shopping';
+    SELECT category_id INTO v_healthcare FROM Category WHERE name='Healthcare';
+    SELECT category_id INTO v_subscriptions FROM Category WHERE name='Subscriptions';
+    SELECT category_id INTO v_education FROM Category WHERE name='Education';
+    SELECT category_id INTO v_travel FROM Category WHERE name='Travel';
 
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    320,
-    '2026-01-06',
-    'Restaurant'
-);
+    -- January Expenses
+    CALL record_expense(v_food, 450, '2026-01-03', 'Grocery shopping');
+    CALL record_expense(v_food, 320, '2026-01-06', 'Restaurant');
+    CALL record_expense(v_transport, 250, '2026-01-04', 'Metro recharge');
+    CALL record_expense(v_rent, 18000, '2026-01-01', 'January Rent');
+    CALL record_expense(v_entertainment, 800, '2026-01-09', 'Movie');
+    CALL record_expense(v_utilities, 1600, '2026-01-10', 'Electricity Bill');
+    CALL record_expense(v_shopping, 2200, '2026-01-12', 'Clothing');
+    CALL record_expense(v_healthcare, 650, '2026-01-15', 'Medicines');
+    CALL record_expense(v_subscriptions, 499, '2026-01-18', 'Netflix');
+    CALL record_expense(v_education, 1500, '2026-01-20', 'Books');
 
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Transport'),
-    250,
-    '2026-01-04',
-    'Metro recharge'
-);
+    -- February Expenses
+    CALL record_expense(v_food, 510, '2026-02-04', 'Groceries');
+    CALL record_expense(v_transport, 900, '2026-02-05', 'Fuel');
+    CALL record_expense(v_shopping, 3400, '2026-02-10', 'Electronics');
+    CALL record_expense(v_travel, 2600, '2026-02-16', 'Weekend Trip');
+    CALL record_expense(v_utilities, 1700, '2026-02-20', 'Internet Bill');
+    CALL record_expense(v_food, 610, '2026-02-23', 'Restaurant');
 
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Rent'),
-    18000,
-    '2026-01-01',
-    'January Rent'
-);
+    -- March Expenses
+    CALL record_expense(v_food, 700, '2026-03-02', 'Groceries');
+    CALL record_expense(v_entertainment, 1200, '2026-03-08', 'Concert');
+    CALL record_expense(v_shopping, 4800, '2026-03-10', 'Shoes');
+    CALL record_expense(v_healthcare, 1100, '2026-03-18', 'Clinic Visit');
+    CALL record_expense(v_travel, 3800, '2026-03-22', 'Train Tickets');
+    CALL record_expense(v_food, 580, '2026-03-25', 'Dinner');
 
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Entertainment'),
-    800,
-    '2026-01-09',
-    'Movie'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Utilities'),
-    1600,
-    '2026-01-10',
-    'Electricity Bill'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Shopping'),
-    2200,
-    '2026-01-12',
-    'Clothing'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Healthcare'),
-    650,
-    '2026-01-15',
-    'Medicines'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Subscriptions'),
-    499,
-    '2026-01-18',
-    'Netflix'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Education'),
-    1500,
-    '2026-01-20',
-    'Books'
-);
-
--- ==========================================
--- February Expenses
--- ==========================================
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    510,
-    '2026-02-04',
-    'Groceries'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Transport'),
-    900,
-    '2026-02-05',
-    'Fuel'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Shopping'),
-    3400,
-    '2026-02-10',
-    'Electronics'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Travel'),
-    2600,
-    '2026-02-16',
-    'Weekend Trip'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Utilities'),
-    1700,
-    '2026-02-20',
-    'Internet Bill'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    610,
-    '2026-02-23',
-    'Restaurant'
-);
-
--- ==========================================
--- March Expenses
--- ==========================================
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    700,
-    '2026-03-02',
-    'Groceries'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Entertainment'),
-    1200,
-    '2026-03-08',
-    'Concert'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Shopping'),
-    4800,
-    '2026-03-10',
-    'Shoes'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Healthcare'),
-    1100,
-    '2026-03-18',
-    'Clinic Visit'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Travel'),
-    3800,
-    '2026-03-22',
-    'Train Tickets'
-);
-
-CALL record_expense(
-    (SELECT category_id FROM Category WHERE name='Food'),
-    580,
-    '2026-03-25',
-    'Dinner'
-);
+END;
+$$;
 
 -- ==========================================
 -- Import History

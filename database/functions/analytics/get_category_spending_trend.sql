@@ -22,3 +22,4 @@ BEGIN
     GROUP BY bp.month, bp.year
     ORDER BY bp.year, bp.month;
 END;
+$$;
