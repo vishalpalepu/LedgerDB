@@ -98,11 +98,9 @@ BEGIN;
 -- TRIGGERS
 -- =====================================================
 
--- Execute all trigger scripts here once they are added.
--- Example:
--- \i triggers/update_timestamp.sql
--- \i triggers/audit_changes.sql
--- \i triggers/budget_alert.sql
+\i triggers/update_timestamp.sql
+\i triggers/audit_trigger.sql
+\i triggers/budget_alert_trigger.sql
 
 -- =====================================================
 -- SEED DATA

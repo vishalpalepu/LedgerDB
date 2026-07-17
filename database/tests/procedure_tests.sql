@@ -28,24 +28,15 @@ ROLLBACK;
 
 BEGIN;
 
-CALL set_budget(
-
-(
-SELECT category_id
-FROM Category
-WHERE name='Food'
-),
-
-(
-SELECT period_id
-FROM BudgetPeriod
-WHERE month=1
-AND year=2026
-),
-
-7500
-
-);
+DO $$ 
+DECLARE 
+    v_cat UUID; 
+    v_per UUID; 
+BEGIN
+    SELECT category_id INTO v_cat FROM Category WHERE name='Food';
+    SELECT period_id INTO v_per FROM BudgetPeriod WHERE month=1 AND year=2026;
+    CALL set_budget(v_cat, v_per, 7500);
+END; $$;
 
 SELECT
 budget_amount
@@ -66,17 +57,13 @@ ROLLBACK;
 
 BEGIN;
 
-CALL update_budget(
-
-(
-SELECT budget_id
-FROM Budget
-LIMIT 1
-),
-
-9000
-
-);
+DO $$
+DECLARE
+    v_budget_id UUID;
+BEGIN
+    SELECT budget_id INTO v_budget_id FROM Budget LIMIT 1;
+    CALL update_budget(v_budget_id, 9000);
+END; $$;
 
 SELECT
 budget_amount
@@ -97,21 +84,13 @@ ROLLBACK;
 
 BEGIN;
 
-CALL record_expense(
-
-(
-SELECT category_id
-FROM Category
-WHERE name='Food'
-),
-
-350,
-
-CURRENT_DATE,
-
-'Procedure Test Expense'
-
-);
+DO $$
+DECLARE
+    v_cat UUID;
+BEGIN
+    SELECT category_id INTO v_cat FROM Category WHERE name='Food';
+    CALL record_expense(v_cat, 350, CURRENT_DATE, 'Procedure Test Expense');
+END; $$;
 
 SELECT *
 
@@ -128,21 +107,14 @@ ROLLBACK;
 
 BEGIN;
 
-CALL update_expense(
-
-(
-SELECT expense_id
-FROM Expense
-LIMIT 1
-),
-
-800,
-
-CURRENT_DATE,
-
-'Updated Test Expense'
-
-);
+DO $$
+DECLARE
+    v_exp_id UUID;
+    v_cat_id UUID;
+BEGIN
+    SELECT expense_id, category_id INTO v_exp_id, v_cat_id FROM Expense LIMIT 1;
+    CALL update_expense(v_exp_id, v_cat_id, 800, CURRENT_DATE, 'Updated Test Expense');
+END; $$;
 
 SELECT *
 
@@ -162,15 +134,13 @@ BEGIN;
 SELECT COUNT(*)
 FROM Expense;
 
-CALL delete_expense(
-
-(
-SELECT expense_id
-FROM Expense
-LIMIT 1
-)
-
-);
+DO $$
+DECLARE
+    v_exp_id UUID;
+BEGIN
+    SELECT expense_id INTO v_exp_id FROM Expense LIMIT 1;
+    CALL delete_expense(v_exp_id);
+END; $$;
 
 SELECT COUNT(*)
 FROM Expense;
@@ -184,21 +154,13 @@ ROLLBACK;
 
 BEGIN;
 
-CALL update_category(
-
-(
-SELECT category_id
-FROM Category
-WHERE name='Food'
-),
-
-'Food Test',
-
-'#FFFFFF',
-
-'restaurant'
-
-);
+DO $$
+DECLARE
+    v_cat UUID;
+BEGIN
+    SELECT category_id INTO v_cat FROM Category WHERE name='Food';
+    CALL update_category(v_cat, 'Food Test', '#FFFFFF', 'restaurant');
+END; $$;
 
 SELECT *
 
@@ -215,7 +177,13 @@ ROLLBACK;
 
 BEGIN;
 
-CALL generate_budget_alerts();
+DO $$
+DECLARE
+    v_per UUID;
+BEGIN
+    SELECT period_id INTO v_per FROM BudgetPeriod LIMIT 1;
+    CALL generate_budget_alerts(v_per);
+END; $$;
 
 SELECT *
 
@@ -232,15 +200,16 @@ ROLLBACK;
 
 BEGIN;
 
-CALL mark_alert_as_read(
-
-(
-SELECT alert_id
-FROM Alert
-LIMIT 1
-)
-
-);
+DO $$
+DECLARE
+    v_alert_id UUID;
+BEGIN
+    SELECT alert_id INTO v_alert_id FROM Alert LIMIT 1;
+    
+    IF v_alert_id IS NOT NULL THEN
+        CALL mark_alert_as_read(v_alert_id);
+    END IF;
+END; $$;
 
 SELECT
 
@@ -274,19 +243,13 @@ VALUES(
 
 );
 
-CALL complete_import_history(
-
-(
-SELECT import_id
-FROM ImportHistory
-ORDER BY imported_at DESC
-LIMIT 1
-),
-
-45,
-5
-
-);
+DO $$
+DECLARE
+    v_import_id UUID;
+BEGIN
+    SELECT import_id INTO v_import_id FROM ImportHistory ORDER BY imported_at DESC LIMIT 1;
+    CALL complete_import_history(v_import_id, 45, 5);
+END; $$;
 
 SELECT *
 
