@@ -19,6 +19,7 @@ This document provides a deep dive into the architectural decisions, database de
 5. [Detailed Function & Trigger Reference](#5-detailed-function--trigger-reference)
     - [Analytical Functions](#analytical-functions)
     - [System Triggers](#system-triggers)
+    - [Summary Dashboard Views](#summary-dashboard-views)
 6. [Engineering Analysis](#6-engineering-analysis)
     - [Trade-offs](#trade-offs)
     - [Educational Objectives](#educational-objectives)
@@ -123,9 +124,22 @@ database/
 │   ├── audit_trigger.sql
 │   ├── budget_alert_trigger.sql
 │   └── update_timestamp.sql
-├── views/             # monthly_dashboard.sql, budget_vs_actual.sql, etc.
-├── seed/              # default_categories.sql, sample_data.sql
-├── tests/             # function_tests.sql, procedure_tests.sql, trigger_tests.sql
+├── views/                      
+│   ├── monthly_dashboard.sql    
+│   ├── monthly_summary.sql     
+│   ├── remaining_budget.sql     
+│   ├── budget_status.sql        
+│   ├── spending_trend.sql       
+│   ├── category_summary.sql     
+│   ├── budget_vs_actual.sql     
+│   └── alert_summary.sql        
+├── seed/
+│   ├── default_categories.sql   
+│   └── sample_data.sql         
+└── tests/
+    ├── function_tests.sql       <-- Unit tests for calculations
+    ├── procedure_tests.sql      <-- Integration tests for workflows
+    └── trigger_tests.sql       
 └── initialize.py
 ```
 
@@ -155,6 +169,20 @@ database/
 | `budget_alert_trigger.sql` | `check_budget_after_insert` | `Expense` | `AFTER INSERT` | Call `is_budget_exceeded()`, insert alert if budget is exceeded |
 | `expense_update.sql` | `check_budget_after_update` | `Expense` | `AFTER UPDATE` | Re-evaluate budget status, create alerts on overspend |
 | `expense_delete.sql` | `check_budget_after_delete` | `Expense` | `AFTER DELETE` | Recalculate budget status after expense removal |
+
+### Summary Dashboard Views
+
+| Order | View                    | Purpose                                            | Depends On                          |
+| ----: | ----------------------- | -------------------------------------------------- | ----------------------------------- |
+|     1 | `monthly_summary.sql`   | Monthly totals (budget, spending, remaining)       | Budget, Expense, BudgetPeriod       |
+|     2 | `category_summary.sql`  | Spending summary per category                      | Category, Expense                   |
+|     3 | `budget_vs_actual.sql`  | Budget allocation vs actual spending               | Budget, Expense, Category           |
+|     4 | `remaining_budget.sql`  | Remaining budget for each category                 | Budget, Expense                     |
+|     5 | `budget_status.sql`     | Budget status (Under Budget, Near Limit, Exceeded) | `budget_vs_actual` (or base tables) |
+|     6 | `alert_summary.sql`     | Alert statistics                                   | Alert                               |
+|     7 | `spending_trend.sql`    | Historical monthly spending                        | BudgetPeriod, Expense               |
+|     8 | `monthly_dashboard.sql` | Consolidated dashboard combining key metrics       | Can reference other views           |
+
 
 ---
 
