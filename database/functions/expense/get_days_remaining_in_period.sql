@@ -6,7 +6,7 @@ LANGUAGE plpgsql
 AS 
 $$
 DECLARE 
-    v_end_date INT;
+    v_end_date DATE;
 BEGIN
     SELECT end_date
     INTO v_end_date
