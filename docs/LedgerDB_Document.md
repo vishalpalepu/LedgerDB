@@ -106,6 +106,19 @@ The frontend never connects directly to PostgreSQL. The flow is: `Frontend -> Fa
 The database implementation is organized into modular SQL scripts to maintain clean separation of concerns:
 
 ```text
+backend/
+│
+├── app/
+│   ├── main.py
+│   ├── config.py
+│   ├── security.py
+│   ├── auth.py
+│   ├── db.py
+│   ├── initialize.py
+│   ├── routes.py
+│   ├── schemas.py
+│   ├── dependencies.py
+│   └── importer.py
 database/
 ├── schema/
 │   ├── 001_tables.sql
@@ -141,6 +154,9 @@ database/
     ├── procedure_tests.sql      <-- Integration tests for workflows
     └── trigger_tests.sql       
 └── initialize.py
+├── requirements.txt
+├── .env.example
+└── README.md
 ```
 
 ---
