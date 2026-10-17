@@ -13,8 +13,14 @@
     <section class="card">
       <h1>LedgerDB Dashboard</h1>
       <p id="status">Checking health…</p>
-      <button id="loadBtn">Load Recent Expenses</button>
-      <pre id="output"></pre>
+      <button id="loadBtn">Load Analytics</button>
+      <div class="charts-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+        <canvas id="monthlyChart"></canvas>
+        <canvas id="categoryChart"></canvas>
+        <canvas id="budgetChart"></canvas>
+        <canvas id="trendChart"></canvas>
+      </div>
+      <pre id="output" style="display:none;"></pre>
     </section>
   </main>
   <script src="script.js"></script>
