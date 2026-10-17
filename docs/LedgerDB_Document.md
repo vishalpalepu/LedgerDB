@@ -232,3 +232,21 @@ This architecture serves as an advanced demonstration of DBMS capabilities, show
 * Financial forecasting and machine learning expense prediction.
 * Database partitioning for long-term historical data.
 * Read replicas for complex analytical workloads.
+
+## Implementation Updates
+
+The following components have been added to the project to provide a thin FastAPI gateway and a premium static frontend.
+
+### Backend (`backend/app/`)
+- **config.py** – Holds environment‑variable configuration with a placeholder PostgreSQL URL and JWT settings.
+- **db.py** – Simple connection‑pool helper exposing a `get_db` dependency for FastAPI routes.
+- **auth.py** – JWT utilities, password hashing, token creation/validation.
+- **routes.py** – Example endpoints (`/token`, `/expenses`) that demonstrate authentication and calling stored procedures.
+- **main.py** – FastAPI entry point, includes health check and mounts the router.
+
+### Frontend (`frontend/`)
+- **index.html** – Modern static page using Google Fonts, glass‑morphism styling, and a tiny JavaScript demo that calls the backend health check and expense endpoint.
+- **style.css** – Vibrant gradient background, glassy card UI, smooth hover effects.
+- **script.js** – Minimal fetch logic showing how to interact with the API (placeholder token used).
+
+These files use placeholder values (e.g., `POSTGRES_URL` environment variable and a dummy JWT secret). Replace them with real credentials before production deployment.
